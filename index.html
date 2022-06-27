@@ -12,7 +12,14 @@
     now.setHours(now.getHours() - 1);
     var str = now.getUTCFullYear() + "-" + (parseInt(now.getUTCMonth()) + 1) + "-" + now.getUTCDate();
     const yesterday = new Date(now);
-    yesterday.setDate(yesterday.getDate() - 1);
+    var subtract = 1;
+    var weekday = now.getUTCDay();
+    if (weekday === 0) {
+        subtract = 2;
+    } else if (weekday === 1) {
+        subtract = 3;
+    }
+    yesterday.setDate(yesterday.getDate() - subtract);
     var yesterday_str = yesterday.getUTCFullYear() + "-" + (parseInt(yesterday.getUTCMonth()) + 1) + "-" + yesterday.getUTCDate();
 
     window.location.replace("https://arxiv.org/search/advanced?advanced=&terms-0-operator=AND&terms-0-term=&terms-0-field=title&terms-1-operator=AND&terms-1-term=cs.CL&terms-1-field=all&terms-2-operator=OR&terms-2-term=cs.LG&terms-2-field=all&terms-3-operator=OR&terms-3-term=cs.CV&terms-3-field=all&classification-physics_archives=all&classification-include_cross_list=include&date-year=&date-filter_by=date_range&date-from_date=" + yesterday_str + "&date-to_date=" + str + "&date-date_type=submitted_date&abstracts=hide&size=50&order=-announced_date_first");
